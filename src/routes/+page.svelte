@@ -102,6 +102,7 @@
 						<div style="float: left">
 							<button
 								class="edit-button"
+								name="edit"
 								onclick={() => {
 									modalLoading = true;
 									goto(`/${selectedEvent?.id}`);
