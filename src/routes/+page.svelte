@@ -7,22 +7,22 @@
 	import type { CalendarOptions } from 'svelte-fullcalendar';
 	import FullCalendar from 'svelte-fullcalendar';
 	import daygridPlugin from '@fullcalendar/daygrid';
-    import interactionPlugin from '@fullcalendar/interaction';
+	import interactionPlugin from '@fullcalendar/interaction';
 	import type { Event } from '$lib/server/remote-events';
-    import Modal from './Modal.svelte';
+	import Modal from './Modal.svelte';
 
 	let { data }: { data: PageData } = $props();
-	
+
 	let eventsLoading = $state(false);
 	let showModal = $state(false);
 	let selectedEvent = $state<Event>();
 	let handleEventClick = (info: any) => {
-        console.log("clicked");
+		console.log('clicked');
 		selectedEvent = data.events.find((x) => x.id === parseInt(info.event.id));
 		showModal = true;
 	};
-    let options: CalendarOptions = $state({
-        eventClick: handleEventClick,
+	let options: CalendarOptions = $state({
+		eventClick: handleEventClick,
 		initialView: 'dayGridMonth',
 		events: data.events.map((x) => ({
 			id: x.id.toString(),
@@ -50,54 +50,62 @@
 	<FullCalendar {options} />
 	{#if showModal && selectedEvent}
 		<Modal bind:showModal>
-            {#snippet header()}
-                <h3 class="text-lg font-bold">{selectedEvent?.id}: {selectedEvent?.title}</h3>
-            {/snippet}			
-				<p>{selectedEvent.description}</p>
-				<p>{new Date(selectedEvent.date).toLocaleString()}</p>
-				<div class="row">
-					<div class="col-md-12">
-						<div style="float: right">
-							<form
-								action="?/delete"
-								method="POST"
-								use:enhance={() => {
-									eventsLoading = true;
-									return ({ update, result }) => {
-										update({ invalidateAll: true }).finally(async () => {
-											if (result.type === 'success') {
-												eventsLoading = false;
-                                                showModal = false;
-												options = {
-													initialView: 'dayGridMonth',
-													events: data.events.map((x) => ({
-														title: `${x.title} - ${x.description}`,
-														date: x.date
-													})),
-													plugins: [daygridPlugin]
-												};
-											}
-										});
-									};
-								}}
-							>
-								<input type="hidden" name="id" value={selectedEvent.id} />
-								<div style="display: flex; align-items: center; ">
-									<IconButton class="material-icons" style="color: red">delete_forever</IconButton>
-								</div>
-							</form>
-						</div>
-						<div style="float: left">
-							<IconButton
-								onclick={() => {
-									goto(`/${selectedEvent?.id}`);
-								}}
-								class="material-icons"
-								style="color: black">edit</IconButton
-							>
-						</div>
+			{#snippet header()}
+				<h3 class="text-lg font-bold">{selectedEvent?.id}: {selectedEvent?.title}</h3>
+			{/snippet}
+			<p style="padding-top:5px;">{selectedEvent.description}</p>
+			<p style="padding-top:5px; padding-bottom:15px">
+				{new Date(selectedEvent.date).toLocaleString()}
+			</p>
+			<div class="row">
+				<div class="col-md-12">
+					<div style="float: right">
+						<form
+							action="?/delete"
+							method="POST"
+							use:enhance={() => {
+								eventsLoading = true;
+								return ({ update, result }) => {
+									update({ invalidateAll: true }).finally(async () => {
+										if (result.type === 'success') {
+											eventsLoading = false;
+											showModal = false;
+											options = {
+												eventClick: handleEventClick,
+												initialView: 'dayGridMonth',
+												events: data.events.map((x) => ({
+													id: x.id.toString(),
+													title: `${x.title} - ${x.description}`,
+													date: x.date
+												})),
+												plugins: [daygridPlugin, interactionPlugin]
+											};
+										}
+									});
+								};
+							}}
+						>
+							<input type="hidden" name="id" value={selectedEvent.id} />
+							<div style="display: flex; align-items: center; ">
+								<button class="delete-button" aria-label="Delete Event">
+									<span class="material-icons">delete_forever</span>
+									<span>Delete</span>
+								</button>
+							</div>
+						</form>
+					</div>
+					<div style="float: left">
+						<button
+							class="edit-button"
+							onclick={() => goto(`/${selectedEvent?.id}`)}
+							aria-label="Edit Event"
+						>
+							<span class="material-icons">edit</span>
+							<span>Edit</span>
+						</button>
 					</div>
 				</div>
+			</div>
 		</Modal>
-	{/if}	
+	{/if}
 {/if}

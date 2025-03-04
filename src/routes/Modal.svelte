@@ -15,12 +15,19 @@
 	onclick={(e) => { if (e.target === dialog) dialog.close(); }}
 >
 	<div>
-		{@render header?.()}
+		<div class="row" style="width: 100%">
+			<div class="col-md-10">
+			{@render header?.()}
+		</div>
+		<div class="col-md-2">
+			<button style="float: left; width: 25px;" onclick={() => dialog.close()}>X</button>
+		</div>
+		</div>
 		<hr />
 		{@render children?.()}
 		<hr />
 		<!-- svelte-ignore a11y_autofocus -->
-		<button autofocus onclick={() => dialog.close()}>close modal</button>
+		
 	</div>
 </dialog>
 

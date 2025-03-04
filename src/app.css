@@ -143,3 +143,55 @@ body {
 	background: #1abc9c;
 	color: white !important;
 }
+
+a {
+  cursor: pointer;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #1976d2; /* Material UI primary color */
+  color: white;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px; /* Slightly rounded corners */
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.edit-button:hover {
+  background-color: #1565c0; /* Slightly darker blue on hover */
+}
+
+.edit-button:active {
+  transform: scale(0.98); /* Slight press effect */
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #d32f2f; /* Material UI error color */
+  color: white;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px; /* Slightly rounded corners */
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.delete-button:hover {
+  background-color: #b71c1c; /* Darker red on hover */
+}
+
+.delete-button:active {
+  transform: scale(0.98); /* Slight press effect */
+}
+
+.material-icons {
+  font-size: 18px;
+}
