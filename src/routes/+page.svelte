@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { enhance } from '$app/forms';
-	import IconButton from '@smui/icon-button';
 	import { Stretch } from 'svelte-loading-spinners';
 	import { goto } from '$app/navigation';
 	import type { CalendarOptions } from 'svelte-fullcalendar';
@@ -15,6 +14,7 @@
 
 	let eventsLoading = $state(false);
 	let showModal = $state(false);
+	let modalLoading = $state(false);
 	let selectedEvent = $state<Event>();
 	let handleEventClick = (info: any) => {
 		console.log('clicked');
@@ -59,51 +59,60 @@
 			</p>
 			<div class="row">
 				<div class="col-md-12">
-					<div style="float: right">
-						<form
-							action="?/delete"
-							method="POST"
-							use:enhance={() => {
-								eventsLoading = true;
-								return ({ update, result }) => {
-									update({ invalidateAll: true }).finally(async () => {
-										if (result.type === 'success') {
-											eventsLoading = false;
-											showModal = false;
-											options = {
-												eventClick: handleEventClick,
-												initialView: 'dayGridMonth',
-												events: data.events.map((x) => ({
-													id: x.id.toString(),
-													title: `${x.title} - ${x.description}`,
-													date: x.date
-												})),
-												plugins: [daygridPlugin, interactionPlugin]
-											};
-										}
-									});
-								};
-							}}
-						>
-							<input type="hidden" name="id" value={selectedEvent.id} />
-							<div style="display: flex; align-items: center; ">
-								<button class="delete-button" aria-label="Delete Event">
-									<span class="material-icons">delete_forever</span>
-									<span>Delete</span>
-								</button>
-							</div>
-						</form>
-					</div>
-					<div style="float: left">
-						<button
-							class="edit-button"
-							onclick={() => goto(`/${selectedEvent?.id}`)}
-							aria-label="Edit Event"
-						>
-							<span class="material-icons">edit</span>
-							<span>Edit</span>
-						</button>
-					</div>
+					{#if modalLoading}
+						<p style="text-align: center">
+							<Stretch size="60" color="#FF3E00" unit="px" duration="1s" /> Loading
+						</p>
+					{:else if !modalLoading}
+						<div style="float: right">
+							<form
+								action="?/delete"
+								method="POST"
+								use:enhance={() => {
+									eventsLoading = true;
+									return ({ update, result }) => {
+										update({ invalidateAll: true }).finally(async () => {
+											if (result.type === 'success') {
+												eventsLoading = false;
+												showModal = false;
+												options = {
+													eventClick: handleEventClick,
+													initialView: 'dayGridMonth',
+													events: data.events.map((x) => ({
+														id: x.id.toString(),
+														title: `${x.title} - ${x.description}`,
+														date: x.date
+													})),
+													plugins: [daygridPlugin, interactionPlugin]
+												};
+											}
+										});
+									};
+								}}
+							>
+								<input type="hidden" name="id" value={selectedEvent.id} />
+								<div style="display: flex; align-items: center; ">
+									<button class="delete-button" aria-label="Delete Event">
+										<span class="material-icons">delete_forever</span>
+										<span>Delete</span>
+									</button>
+								</div>
+							</form>
+						</div>
+						<div style="float: left">
+							<button
+								class="edit-button"
+								onclick={() => {
+									modalLoading = true;
+									goto(`/${selectedEvent?.id}`);
+								}}
+								aria-label="Edit Event"
+							>
+								<span class="material-icons">edit</span>
+								<span>Edit</span>
+							</button>
+						</div>
+					{/if}
 				</div>
 			</div>
 		</Modal>
