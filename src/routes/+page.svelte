@@ -13,7 +13,7 @@
 	Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation
 </p>
 
-<h1 class="text-xl">Events</h1>
+<h2 class="text-xl">Events</h2>
 <div style="text-align: center; margin-bottom: 15px">
 	<a class="btn" href="/newevent" style="color:blue; border:solid black" role="button">Add Event</a>
 </div>
@@ -24,9 +24,9 @@
 {:else if !eventsLoading}
 	{#each data.events as event}
 		<div class="card">
-			<h2 class="text-lg font-bold">{event.id}: {event.title}</h2>
+			<h3 class="text-lg font-bold">{event.id}: {event.title}</h3>
 			<p>{event.description}</p>
-			<p>{event.date}</p>
+			<p>{new Date(event.date).toLocaleString()}</p>
 			<div class="row">
 				<div class="col-md-12">
                     <div style="float: right">
