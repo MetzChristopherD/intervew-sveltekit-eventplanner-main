@@ -15,8 +15,6 @@ export const actions: Actions = {
         const formdata = await request.formData();
         
         const id:number = parseInt(formdata.get('id')?.toString() ?? '0');
-        console.log("id: " + id);
-        console.log(formdata);
         const title = formdata.get('title')?.toString();
         const description = formdata.get('description')?.toString();
         const date = formdata.get('date')?.toString();
