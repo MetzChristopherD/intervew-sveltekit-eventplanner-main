@@ -80,7 +80,7 @@
 					</div>
 					<div class="row">
                         <div class="col-md-6">
-							<button style="float:left;" class="btn" type="button" onclick={() => goto("/")}>Back</button>
+							<button style="float:left;" class="btn" type="button" onclick={() => { formLoading = true; goto("/"); }}>Back</button>
 						</div>
                         <div class="col-md-6">
 							<button style="float:right" class="btn" type="submit">Update Event</button>
