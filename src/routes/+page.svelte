@@ -8,7 +8,7 @@
 	import daygridPlugin from '@fullcalendar/daygrid';
 	import interactionPlugin from '@fullcalendar/interaction';
 	import type { Event } from '$lib/server/remote-events';
-	import Modal from './Modal.svelte';
+	import Modal from '../components/Modal.svelte';
 
 	let { data }: { data: PageData } = $props();
 
