@@ -5,6 +5,10 @@
 	import { goto } from '$app/navigation';
 	let formLoading = $state(false);
 	let { data }: { data: PageData } = $props();
+    const now = new Date();
+    const timezoneOffset = now.getTimezoneOffset(); // Offset in minutes
+    const localTime = new Date(now.getTime() - timezoneOffset * 60 * 1000);
+    const today = localTime.toISOString().slice(0, 16);
 </script>
 
 <div class="center">
@@ -58,15 +62,7 @@
 						<label for="date">Date</label>
 					</div>
 					<div class="col-md-8">
-						<input
-							disabled={formLoading}
-							style="width:100%"
-							type="datetime-local"
-							id="date"
-							value={data.event.date}
-							name="date"
-							required
-						/>
+                        <input disabled={formLoading} min={today} style="width:100%" type="datetime-local" value={data.event.date} id="date" name="date" required />
 					</div>
 				</div>
 				<div class="row">

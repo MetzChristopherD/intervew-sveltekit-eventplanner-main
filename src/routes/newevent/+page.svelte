@@ -3,7 +3,10 @@
 	import { Stretch } from 'svelte-loading-spinners';
 	import { goto } from '$app/navigation';
 	let formLoading = $state(false);
-    var today = new Date().toISOString().slice(0, 16);
+    const now = new Date();
+    const timezoneOffset = now.getTimezoneOffset(); // Offset in minutes
+    const localTime = new Date(now.getTime() - timezoneOffset * 60 * 1000);
+    const today = localTime.toISOString().slice(0, 16);
 </script>
 
 <div class="center">

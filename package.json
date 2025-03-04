@@ -17,12 +17,15 @@
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.3",
+		"@event-calendar/core": "^3.10.0",
+		"@event-calendar/time-grid": "^3.10.0",
 		"@playwright/test": "^1.45.3",
 		"@smui/card": "^8.0.0-beta.3",
 		"@smui/icon-button": "^8.0.0-beta.3",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@types/event-calendar__core": "^3.7.0",
 		"@types/node": "^22.10.5",
 		"autoprefixer": "^10.4.20",
 		"daisyui": "^4.12.23",
@@ -34,7 +37,9 @@
 		"prettier-plugin-svelte": "^3.2.6",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
+		"svelte-fullcalendar": "^3.0.0",
 		"svelte-loading-spinners": "^0.3.6",
+		"svelte-preprocess": "^6.0.3",
 		"tailwindcss": "^3.4.9",
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.0.0",
@@ -42,6 +47,9 @@
 		"vitest": "^2.0.4"
 	},
 	"dependencies": {
+		"@fullcalendar/common": "^5.11.5",
+		"@fullcalendar/core": "^6.1.15",
+		"@fullcalendar/daygrid": "^6.1.15",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15"
 	}
