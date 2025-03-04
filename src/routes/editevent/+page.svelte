@@ -49,7 +49,7 @@
 							<Stretch size="60" color="#FF3E00" unit="px" duration="1s" /> Loading
 						</p>
 					{:else if !formLoading}
-						<button style="float:right" class="btn" type="submit">Create Event</button>
+						<button style="float:right" class="btn" type="submit">Update Event</button>
 					{/if}
 				</div>
 			</div>

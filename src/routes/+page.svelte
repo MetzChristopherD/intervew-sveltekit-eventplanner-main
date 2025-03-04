@@ -3,6 +3,7 @@
 	import { enhance } from '$app/forms';
 	import IconButton from '@smui/icon-button';
 	import { Stretch } from 'svelte-loading-spinners';
+	import { goto } from '$app/navigation';
 	let { data }: { data: PageData } = $props();
 	let eventsLoading = $state(false);
 </script>
@@ -49,26 +50,8 @@
 							</div>
 						</form>
 					</div>
-					<div style="float: left">
-						<form
-							action="?/edit"
-							method="POST"
-							use:enhance={() => {
-								eventsLoading = true;
-								return ({ update, result }) => {
-									update({ invalidateAll: true }).finally(async () => {
-										if (result.type === 'success') {
-											eventsLoading = false;
-										}
-									});
-								};
-							}}
-						>
-							<input type="hidden" name="id" value={event.id} />
-							<div style="display: flex; align-items: center;">
-								<IconButton class="material-icons" style="color: black">edit</IconButton>
-							</div>
-						</form>
+					<div style="float: left">						
+						<IconButton onclick={() => { goto(`/${event.id}`)}} class="material-icons" style="color: black">edit</IconButton>							
 					</div>
 					
 				</div>
